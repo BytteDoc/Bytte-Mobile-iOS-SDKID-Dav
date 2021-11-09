@@ -161,90 +161,164 @@ El evento de CallBack de la captura del código de barras, esta dado por el sigu
         }
     }
 ```
-
-#### 3.3.2 Captura documentos frente y reverso:
-A continuación, se listan los documentos soportados para este proceso:
-
-  > * Cédula Ciudadanía Colombiana (Hologramas)
-  > * Cédula Ciudadanía Colombiana (Digital)
-
-
-En los assets de la aplicacion debe tener un recurso llamado ***frontBack.png*** recurso que indica el momento de cambio de cara del documento.
-* URL:  [http://www.bytte.com.co/ftpaccess/Varios/CarlosG/Documentaci%C3%B3n/frontBack.png](http://www.bytte.com.co/ftpaccess/Varios/CarlosG/Documentaci%C3%B3n/frontBack.png)
-
+#### 3.3.2 Tarjeta de Crédito:
 Para realizar el llamado se debe ejecutar el siguiente código:
+
 ```swift
     //Referencia
-    private var vcFrenteReversoDocument: CapturaFrenteReverso!
-    //Captura frente y reverso
-    @IBAction func btnCapturar(_ sender: UIButton) {
+      private var oCapturaCreditCard: CreditCardViewController!
+    
+    //Evento click boton captura
+    @IBAction func btnCaptura(_ sender: Any) {
         //Imagen de Fondo
-        let imFrente:UIImage! = UIImage(named:"front_co_doc.png");
-        let imReverso:UIImage! = UIImage(named:"back_co_doc.png");
+        let imFront:UIImage! = UIImage(named:"toma_doc_frontal.png")
         
-        //View Controller
-        self.vcFrenteReversoDocument =  CapturaFrenteReverso(licenseKey: self.keyLicense, withPais: "co", withImagenGuiaFrente: imFrente, withImagenGuiaReverso: imReverso, withPassword: "", withTimeOut: 20);
+        //FrontDocument View Controller
+        self.oCapturaCreditCard = CreditCardViewController(licenseKey: self.keyLicense, withImagenGuia: imFront, withPassword: "", withTimeOut: 10)
         
-        self.vcFrenteReversoDocument.capturarFrenteReversoDelegate=self;
+        self.oCapturaCreditCard.capturaCreditCardDelegate=self;
         
         //Obtengo el Controller
-        let vc:UIViewController! = self.vcFrenteReversoDocument.getDocumentoViewController();
+        let vc:UIViewController! = self.oCapturaCreditCard.getCreditCardViewController()
         
         //Presento View Controller
         self.present(vc, animated:false, completion:nil)
     }
 ```
 * ***licenseKey***: cadena de texto entregada por Bytte para la activación del producto. 
-* ***WithPais***: variable de país o documento a capturar.
-   > * ***co***: Cédula Ciudadanía Colombiana (Hologramas).
-   > * ***cov2***: Cédula Ciudadanía Colombiana (Digital).
+* ***WithPais***: variable de país a capturar (co).
 * ***WithTimeOut***: Tiempo para finalizar captura en segundos.
 
-El delegado a suscribir es ***CapturaFrenteReversoDelegate***
+El delegado a suscribir es ***CapturaCreditCardDelegate***
 
-##### ***CallBack captura frente y reverso documento***
+##### ***CallBack captura tarjeta de crédito***
 
-El evento de CallBack de la captura frente y reverso documento, esta dado por el siguiente delegado:
-* ***doCapturarFrenteReversoDelegate***
+El evento de CallBack de la captura de tarjeta de crédito, esta dado por el siguiente delegado:
+* ***doCapturaCreditCard***
 
 ```swift
-    //Delegado captura documento frente y reverso
-    func doCapturarFrenteReversoDelegate(_ FrenteReversoDocumento: FrenteReversoDocumento!, withPassword FilePassword: String!) {
+    //Delegado de Captura tarjeta de crédito
+    func doCapturaCreditCard(_ oInfoCreditCard: CreditCardResponse!, withPassword FilePassword: String!) {
         DispatchQueue.main.async {
-            if(FrenteReversoDocumento.statusOperacion) {
-              //El objeto FrenteReversoDocumento contiene la información de respuesta
-            }
-            self.vcFrenteReversoDocument = nil;
+            //El objeto oInfoCreditCard contiene la información de respuesta
+        }
+    }
+```
+#### 3.4. Captura Foto:
+Para realizar el llamado se debe ejecutar el siguiente código:
+
+```swift
+    //Referencia
+    private var Ofoto: CapturaFotoViewController!
+    
+    //Evento click boton captura
+    @IBAction func btnCapturar(_ sender: UIButton) {
+        
+        self.Ofoto=CapturaFotoViewController(x: 0, y: 0, color: 0)
+        
+        self.Ofoto.capturaFotoDelegate=self;
+        
+        //Obtengo el Controller
+        let vc:UIViewController! = self.Ofoto.getFotoViewController();
+        
+         //Presento View Controller
+        self.present(vc, animated:false, completion:nil)
+    }
+```
+* ***x***: parametro Width ancho de la imagen. 
+* ***y***: parametro Height alto de la imagen.
+* ***Color***: parametro monochromatic 1 - image monochromatric ok 0.
+
+El delegado a suscribir es ***CapturaFotoDelegate***
+
+##### ***CallBack captura foto***
+
+El evento de CallBack de la captura foto, esta dado por el siguiente delegado:
+* ***doCapturaFoto***
+
+```swift
+    //Delegado de Captura foto
+    func doCapturaFoto(_ oInfoFoto: FotoResponse!) {
+        DispatchQueue.main.async {
+            //El objeto oInfoFoto contiene la información de respuesta
+        }
+    }
+```
+#### 3.5. Extraer Archivo:
+
+Para realizar el llamado se debe ejecutar el siguiente código:
+
+```swift
+    //Referencia
+    private var OArchivo: ExtraerArchivoViewController!
+    
+    //Evento click boton captura
+    @IBAction func btnImagen(_ sender: UIButton) {
+        
+        self.OArchivo = ExtraerArchivoViewController(idTipo: 1)
+        
+        self.OArchivo.extraerArchivoDelegate=self;
+        
+        //Obtengo el Controller
+        let vc:UIViewController! = self.OArchivo.getArchivoViewController();
+        
+        //Presento View Controller
+        self.present(vc, animated:false, completion:nil)
+    }
+```
+* ***idTipo***: identifica el tipo de busqueda 0-> file .pdf ---1->galeria .png-.jpg. 
+
+El delegado a suscribir es ***ExtraerArchivoDelegate***
+
+##### ***CallBack extraer archivo***
+
+El evento de CallBack de extraer archivo, esta dado por el siguiente delegado:
+* ***doExtraerArchivo***
+
+```swift
+    //Delegado de extraer archivo
+     func doExtraerArchivo(_ oInfoArchivo: ArchivoResponse!) {
+        DispatchQueue.main.async {
+            //El objeto oInfoArchivo contiene la información de respuesta
         }
     }
 ```
 
-#### 3.4. Captura Biometria:
+#### 3.6. Captura Biometria:
 
 ##### ***Biometria Dactilar***
 Para realizar el llamado se debe ejecutar el siguiente código:
 
 ```swift
-    //Evento Capturar
+     //Evento Capturar
     @IBAction func btnCapturar(_ sender: UIButton) {
         let fingerID = FingerID()
-        //Asigno delegado
+        //Asigno delegate
         fingerID.delegate = self
         //Request
         //Dedo base a Capturar (Mano derecha = 1,2,3,4,5) (Mano Izquierda = 6,7,8,9,10)
-        let requestF = FingerRequest(timeOut: 20, fingerNumber: 2, boxesColor: .white, solidColor: .black)
+        let requestFinger = FingerRequest(url: Endpoints.url, key: "", finger: 2, timeOut: Endpoints.timeOut)
+        //set color
+        fingerID.setBoxesColor = .white
+        fingerID.setSolidColor = .black
+        fingerID.setBoxesTransparent = .red
         //llamado
-        fingerID.fingersCaptureID(viewController: self, bundlePath: bundlePath, request: requestF)
+        fingerID.IDCaptureFinger(licenseId: licenseName, viewController: self, request: requestFinger)
     }
     
 ```
-* ***bundlePath***: String archivo capturado anteriormente (3.2)
-* ***fingerNumber***: Variable dedo a capturar. 
+* ***licenseId***: String archivo capturado anteriormente (3.2).
+* ***viewController***: viewController actual.
+* ***setBoxesColor***: setBoxesColor. 
+* ***setSolidColor***: setSolidColor. 
+* ***setBoxesTransparent***: setBoxesTransparent. 
+ ***FingerRequest***: 
+* ***url***: url proporcionada por bytte
+* ***finger***: Variable dedo a capturar. 
    > * ***2***: Mano derecha.
    > * ***7***: Mano Izquierda.
 * ***timeOut***: Tiempo para finalizar captura en segundos.
-* ***boxesColor***: Color cuadrados captura. 
-* ***solidColor***: Color base captura. 
+* ***key***: key cifrado. 
 
 El delegado a suscribir es ***FingerIDDelegate***
 
@@ -302,18 +376,22 @@ Para realizar el llamado se debe ejecutar el siguiente código:
 ```swift
     //Captura Facial
     @IBAction func btnCapturar(_ sender: UIButton) {
-        let fingerID = FaceID()
+        let faceID = FaceID()
         
-        fingerID.delegate = self
+        faceID.delegate = self
+        faceID.setColor = .red
+        let requestFace = FaceRequest(url: Endpoints.url, key: "", camera: 1, timeOut: Endpoints.timeOut)
         
-        let requestF = FaceRequest(timeOut: 20, color: .black)
-        
-        fingerID.faceCaptureID(viewcontrol: self, bundlePath: bundlePath, request: requestF)
+        faceID.IDCaptureFace(licenseId: licenseName, viewcontrol: self, request: requestFace)
     }
 ```
-* ***bundlePath***: String archivo capturado anteriormente (3.2)
-* ***timeOut***: Tiempo para finalizar captura en segundos.
+* ***licenseId***: String archivo capturado anteriormente (3.2).
+* ***viewcontrol***: viewController actual.
 * ***color***: Color base captura. 
+ ***FaceRequest***: 
+* ***url***: url proporcionada por bytte
+* ***timeOut***: Tiempo para finalizar captura en segundos.
+* ***key***: key cifrado. 
 
 El delegado a suscribir es ***FaceIDDelegate***
 
@@ -355,6 +433,7 @@ Al realizar los llamados correspondientes para todas las capturas se genera una 
 #### 4.4. Captura correcta
 
 ![Directories](http://www.bytte.com.co/ftpaccess/Varios/CarlosG/Documentaci%C3%B3n/Correcta.png)
+
 
 
 
