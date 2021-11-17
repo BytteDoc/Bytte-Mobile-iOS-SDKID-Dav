@@ -19,20 +19,23 @@ El presente documento tiene como objetivo explicar basado en un ejemplo, como re
 #### 1.2. Factores Limitantes
 
 Los factores limitantes para la integración del SDK son:
-* Se debe verificar la calidad de la cámara, es recomendable utilizar dispositivos con cámara que tengan la característica de “Auto Foco” habilitada
-* Se recomiendan cámaras con resolución mayores o iguales a 8 Mega Pixeles para un óptimo rendimiento
-* El SDK no funciona sobre dispositivos virtuales, únicamente sobre dispositivos físicos IPhone
+* Se debe verificar la calidad de la cámara, es recomendable utilizar dispositivos con cámara que tengan la característica de “Auto Foco” habilitada.
+* Se recomiendan cámaras con resolución mayores o iguales a 8 Mega Pixeles para un óptimo rendimiento.
+* El SDK no funciona sobre dispositivos virtuales, únicamente sobre dispositivos físicos IPhone.
 
 ### 2. INSTALACIÓN
 
 #### 2.1. Pre requisitos
 
-* Para compilación de aplicación en plataforma IOS, se requiere:
-    > * XCode 12 o Superior con SDK IOS 12 o superior
+* Para la compilación de aplicación en plataforma IOS, se requiere:
+    > * XCode 12 o Superior con SDK IOS 12 o superior.
 
 #### 2.2. Librerías Embebidas
 
-* La aplicación debe tener las siguientes librerías como recurso embebido en el folder “Frameworks”:
+* La aplicación debe tener las siguientes librerías como recurso embebido en el folder “Frameworks” como lo indica la siguiente imagen:
+
+ ![Directories](http://www.bytte.com.co/ftpaccess/Varios/CarlosG/Documentaci%C3%B3n/LibreriasBytteF.png)
+
   > * BytteLibrarySDKComun.framework
   > * BytteLibrarySDKDocumentoV2.framework
   > * BytteLibrarySDKFaceID.framework
@@ -41,11 +44,11 @@ Los factores limitantes para la integración del SDK son:
   > * IdentyFace.framework
   > * Microblink.framework
 
-![Directories](http://www.bytte.com.co/ftpaccess/Varios/CarlosG/Documentaci%C3%B3n/LibreriasBytteF.png)
+
 
 #### 2.3. Deshabilitar BitCode
 
-Para el correcto funcionamiento de la aplicación, se debe deshabilitar el BitCode
+Para el correcto funcionamiento de la aplicación, se debe deshabilitar el BitCode:
 
 ![Directories](http://www.bytte.com.co/ftpaccess/Varios/CarlosG/Documentaci%C3%B3n/Bitcode.png)
 
@@ -61,7 +64,7 @@ A continuación, se listan los import que la librería expone:
   
 #### 3.2. Activación de la Licencia de Captura:
 
-Bytte proporciona los archivos de licencia requeridos para las siguientes capturas.
+Bytte proporciona los archivos de licencia requeridos para las siguientes capturas:
 
   > * Captura de Huellas
   > * Captura de Selfie
@@ -225,9 +228,9 @@ Para realizar el llamado se debe ejecutar el siguiente código:
         self.present(vc, animated:false, completion:nil)
     }
 ```
-* ***x***: parametro Width ancho de la imagen. 
-* ***y***: parametro Height alto de la imagen.
-* ***Color***: parametro monochromatic 1 - image monochromatric ok 0.
+* ***x***: parámetro ancho de la imagen. 
+* ***y***: parámetro alto de la imagen.
+* ***Color***: parámetro monocromático 1 - imagen monocromático ok 0.
 
 El delegado a suscribir es ***CapturaFotoDelegate***
 
@@ -284,9 +287,9 @@ El evento de CallBack de extraer archivo, esta dado por el siguiente delegado:
     }
 ```
 
-#### 3.6. Captura Biometria:
+#### 3.6. Captura Biometría:
 
-##### ***Biometria Dactilar***
+##### ***Biometría Dactilar***
 Para realizar el llamado se debe ejecutar el siguiente código:
 
 ```swift
@@ -370,7 +373,7 @@ El evento de CallBack de la captura dactilar, esta dado por el siguiente delegad
 ```
 #### 3.5. Captura Facial:
 
-##### ***Biometria Facial***
+##### ***Biometría Facial***
 Para realizar el llamado se debe ejecutar el siguiente código:
 
 ```swift
@@ -413,9 +416,9 @@ El evento de CallBack de la captura facial, esta dado por el siguiente delegado:
         }
     }
 ```
-### 4. Códigos Respuesta
+### 4. Códigos de respuesta
 #### 4.1. Base Respuesta
-Al realizar los llamados correspondientes para todas las capturas se genera una respuesta base donde se controlan variables del proceso de captura
+Al realizar los llamados correspondientes para todas las capturas se genera una respuesta base, donde se controlan variables del proceso de captura.
 
 ```objc
 @property (nonatomic) NSString * MensajeOriginal;
@@ -433,11 +436,3 @@ Al realizar los llamados correspondientes para todas las capturas se genera una 
 #### 4.4. Captura correcta
 
 ![Directories](http://www.bytte.com.co/ftpaccess/Varios/CarlosG/Documentaci%C3%B3n/Correcta.png)
-
-
-
-
-
-
-
-
